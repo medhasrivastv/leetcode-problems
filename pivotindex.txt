@@ -1,0 +1,35 @@
+Question:
+Given an array of integers nums, calculate the pivot index of this array.
+The pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.
+If the index is on the left edge of the array, then the left sum is 0 because there are no elements to the left. This also applies to the right edge of the array.
+Return the leftmost pivot index. If no such index exists, return -1.
+
+https://leetcode.com/problems/find-pivot-index/?envType=study-plan&id=level-1
+
+class Solution {
+    public int pivotIndex(int[] nums) {
+         int [] ps = new int[nums.length];
+        int n = nums.length;
+        ps[0] = nums[0];
+        int SL=0, SR=0, eqindex = -1;
+        for(int i=1; i<nums.length; i++){
+            ps[i] = nums[i] + ps[i-1];
+        }
+      
+        for(int i=0; i<n; i++){
+              if (i == 0){
+            SR = ps[n-1] - ps[0];
+        }
+        else{
+            SL = ps[i-1];
+            SR = ps[n-1] - ps[i];
+        }
+            if(SL == SR){
+                eqindex =  i;
+                break;
+            }
+        }
+        return eqindex;
+       
+    }
+}
